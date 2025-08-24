@@ -1,0 +1,10 @@
+[package]
+name = "devctr"
+version = "0.1.0"
+edition = "2024"
+description = "A CLI tool to help manage development container setup"
+
+[dependencies]
+clap = { version = "4.5.45", features = ["derive"] }
+indoc = "2.0.6"
+users = "0.11.0"
