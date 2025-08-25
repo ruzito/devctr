@@ -8,17 +8,6 @@ fn cli() -> Command {
         .version(env!("CARGO_PKG_VERSION"))
         .about(env!("CARGO_PKG_DESCRIPTION"))
         .subcommand(
-            Command::new("run")
-                .about("Run command inside container")
-                .arg(Arg::new("container").required(true))
-                .arg(Arg::new("command").num_args(1..).required(true)),
-        )
-        .subcommand(
-            Command::new("enter")
-                .about("Open terminal in container")
-                .arg(Arg::new("container").required(true)),
-        )
-        .subcommand(
             Command::new("add-repo")
                 .about("Add a new source code repository")
                 .arg(Arg::new("name").required(true))
@@ -41,15 +30,6 @@ fn cli() -> Command {
 fn main() {
     let matches = cli().get_matches();
     match matches.subcommand() {
-        Some(("run", sub_m)) => {
-            let container = sub_m.get_one::<String>("container").unwrap();
-            let command: Vec<String> = sub_m.get_many::<String>("command").unwrap().map(|s| s.to_string()).collect();
-            println!("Run command inside container: {container}, command={command:?}");
-        }
-        Some(("enter", sub_m)) => {
-            let container = sub_m.get_one::<String>("container").unwrap();
-            println!("Open terminal in {container}");
-        }
         Some(("add-repo", sub_m)) => {
             let name = sub_m.get_one::<String>("name").unwrap();
             let git = sub_m.get_one::<String>("git");
